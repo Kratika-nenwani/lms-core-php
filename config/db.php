@@ -41,10 +41,7 @@ class Database
     public function connect()
     {
         $this->conn = null;
-
-        // TEMP DEBUG LINE
-        echo "DB_HOST: " . getenv("DB_HOST") . "<br>";
-
+        
         try {
             $this->conn = new PDO(
                 "mysql:host={$this->host};dbname={$this->db_name}",
