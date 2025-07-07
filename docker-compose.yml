@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: lms
+      # ✅ Remove the lines below to avoid the error:
+      # MYSQL_USER: root
+      # MYSQL_PASSWORD: root
+    ports:
+      - "3307:3306"  # changed to avoid XAMPP conflict
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
