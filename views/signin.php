@@ -42,9 +42,9 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     if (data.status === 'success') {
         setTimeout(() => {
             if (data.isadmin) {
-                window.location.href = 'views/admin/admin_dashboard.php';
+                window.location.href = 'admin/admin_dashboard.php';
             } else {
-                window.location.href = 'views/user/user_dashboard.php';
+                window.location.href = 'user/user_dashboard.php';
             }
         }, 1000);
     }
