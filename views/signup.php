@@ -95,17 +95,17 @@ document.getElementById('signupForm').addEventListener('submit', function(e) {
         return res.json();
     })
     .then(data => {
-        console.log("Server Response:", data); // 👈 see actual response
+        console.log("Server Response:", data);
         const messageDiv = document.getElementById('responseMessage');
         if (data.status === "success") {
             messageDiv.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
-            this.reset(); // 👈 use 'this' instead of 'form'
+            this.reset(); 
         } else {
             messageDiv.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
         }
     })
     .catch(err => {
-        console.error("Fetch error:", err); // 👈 will catch any network or JSON error
+        console.error("Fetch error:", err); 
         document.getElementById('responseMessage').innerHTML =
             `<div class="alert alert-danger">Something went wrong. Please try again.</div>`;
     });
