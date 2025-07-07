@@ -9,12 +9,14 @@ class Book {
         $this->conn = $db->connect();
     }
 
+    // Get All Books query
     public function getAllBooks() {
         $stmt = $this->conn->prepare("SELECT * FROM books");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
+    
+    // Add All book Query
     public function addBook($data) {
         $stmt = $this->conn->prepare("
             INSERT INTO books 

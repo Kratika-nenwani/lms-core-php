@@ -9,12 +9,14 @@ class User {
         $this->conn = $db->connect();
     }
 
+    // Query to check that does the user exsists
     public function isUserExists($email, $unique_name) {
         $stmt = $this->conn->prepare("SELECT * FROM users WHERE email = ? OR unique_name = ?");
         $stmt->execute([$email, $unique_name]);
         return $stmt->fetch(PDO::FETCH_ASSOC) ? true : false;
     }
 
+    // query to register user
     public function registerUser($data) {
         $stmt = $this->conn->prepare("
             INSERT INTO users (first_name, last_name, unique_name, email, password, mobile) 
@@ -30,6 +32,7 @@ class User {
         ]);
     }
 
+    //query for user login
     public function loginUser($unique_name, $password) {
         $stmt = $this->conn->prepare("SELECT * FROM users WHERE unique_name = ?");
         $stmt->execute([$unique_name]);

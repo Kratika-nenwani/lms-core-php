@@ -22,8 +22,10 @@
 //         return $this->conn;
 //     }
 // }
+// Database class to handle MySQL database connection using PDO
 class Database
 {
+    // Database configuration variables
     private $host;
     private $db_name;
     private $username;
@@ -38,10 +40,11 @@ class Database
         $this->password = getenv("DB_PASS");
     }
 
+    // Method to establish and return the database connection
     public function connect()
     {
         $this->conn = null;
-        
+
         try {
             $this->conn = new PDO(
                 "mysql:host={$this->host};dbname={$this->db_name}",

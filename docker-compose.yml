@@ -16,11 +16,9 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: lms
-      # ✅ Remove the lines below to avoid the error:
-      # MYSQL_USER: root
-      # MYSQL_PASSWORD: root
+      
     ports:
-      - "3307:3306"  # changed to avoid XAMPP conflict
+      - "3307:3306" 
     volumes:
       - db_data:/var/lib/mysql
 

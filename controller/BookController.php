@@ -8,11 +8,12 @@ class BookController {
     public function __construct() {
         $this->bookModel = new Book();
     }
-
+    // Function to fetch all book
     public function fetchBooks() {
         return $this->bookModel->getAllBooks();
     }
 
+    // Function to Add book
     public function AddBook() {
     if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_book'])) {
         $bookData = [
