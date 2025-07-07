@@ -1,6 +1,59 @@
 <?php
+// session_start();
+// require_once(__DIR__ . '/../model/User.php'); // Use absolute path
+// header('Content-Type: application/json');
+
+// $user = new User();
+
+// if ($_SERVER["REQUEST_METHOD"] === "POST") {
+//     $action = $_POST['action'] ?? '';
+//     $unique_name = $_POST['unique_name'] ?? '';
+
+//     if ($action === 'signup') {
+//         $email = $_POST['email'] ?? '';
+//         $_POST['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+//         if ($user->isUserExists($email, $unique_name)) {
+//             echo json_encode(["status" => "error", "message" => "Email or Unique Name already exists"]);
+//         } elseif ($user->registerUser($_POST)) {
+//             echo json_encode(["status" => "success", "message" => "Registered successfully"]);
+//         } else {
+//             echo json_encode(["status" => "error", "message" => "Registration failed"]);
+//         }
+//         exit;
+//     }
+
+//     if ($action === 'login') {
+//         $password = $_POST['password'] ?? '';
+//         $login = $user->loginUser($unique_name, $password);
+
+//         if ($login) {
+//             $_SESSION['user'] = $login;
+//             if (!empty($login['isadmin'])) {
+//                 $_SESSION['isadmin'] = true;
+//             }
+
+//             echo json_encode([
+//                 "status" => "success",
+//                 "message" => "Login successful",
+//                 "isadmin" => !empty($login['isadmin']) ? true : false
+//             ]);
+//         } else {
+//             echo json_encode([
+//                 "status" => "error",
+//                 "message" => "Invalid credentials"
+//             ]);
+//         }
+//         exit;
+//     }
+// }
+
 session_start();
-require_once(__DIR__ . '/../model/User.php'); // Use absolute path
+
+// Start output buffering to prevent unwanted output
+ob_start();
+
+require_once(__DIR__ . '/../model/User.php'); // Absolute path
 header('Content-Type: application/json');
 
 $user = new User();
@@ -14,10 +67,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_POST['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
         if ($user->isUserExists($email, $unique_name)) {
+            ob_clean(); // clean any buffered output
             echo json_encode(["status" => "error", "message" => "Email or Unique Name already exists"]);
         } elseif ($user->registerUser($_POST)) {
+            ob_clean();
             echo json_encode(["status" => "success", "message" => "Registered successfully"]);
         } else {
+            ob_clean();
             echo json_encode(["status" => "error", "message" => "Registration failed"]);
         }
         exit;
@@ -33,12 +89,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $_SESSION['isadmin'] = true;
             }
 
+            ob_clean();
             echo json_encode([
                 "status" => "success",
                 "message" => "Login successful",
                 "isadmin" => !empty($login['isadmin']) ? true : false
             ]);
         } else {
+            ob_clean();
             echo json_encode([
                 "status" => "error",
                 "message" => "Invalid credentials"
@@ -47,4 +105,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit;
     }
 }
+
+// If no valid action is found
+ob_clean();
+echo json_encode(["status" => "error", "message" => "Invalid request"]);
+exit;
+
 ?>
