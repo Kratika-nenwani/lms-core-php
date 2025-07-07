@@ -82,30 +82,34 @@
 // });
 document.getElementById('signupForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    const formElement = this; 
+    const form = new FormData(this);
 
     fetch('../controller/AuthController.php', {
         method: 'POST',
         body: form
     })
-    .then(res => res.json())
+    .then(res => {
+        if (!res.ok) {
+            throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return res.json();
+    })
     .then(data => {
-        console.log("Response from server:", data); 
+        console.log("Server Response:", data); // 👈 see actual response
         const messageDiv = document.getElementById('responseMessage');
         if (data.status === "success") {
             messageDiv.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
-            formElement.reset();
+            this.reset(); // 👈 use 'this' instead of 'form'
         } else {
             messageDiv.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
         }
     })
     .catch(err => {
-        console.error("Fetch error:", err); 
+        console.error("Fetch error:", err); // 👈 will catch any network or JSON error
         document.getElementById('responseMessage').innerHTML =
             `<div class="alert alert-danger">Something went wrong. Please try again.</div>`;
     });
 });
-
 
 </script>
 
