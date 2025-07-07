@@ -22,22 +22,29 @@
 //         return $this->conn;
 //     }
 // }
-class Database {
+class Database
+{
     private $host;
     private $db_name;
     private $username;
     private $password;
     public $conn;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->host = getenv("DB_HOST");
         $this->db_name = getenv("DB_NAME");
         $this->username = getenv("DB_USER");
         $this->password = getenv("DB_PASS");
     }
 
-    public function connect() {
+    public function connect()
+    {
         $this->conn = null;
+
+        // TEMP DEBUG LINE
+        echo "DB_HOST: " . getenv("DB_HOST") . "<br>";
+
         try {
             $this->conn = new PDO(
                 "mysql:host={$this->host};dbname={$this->db_name}",
@@ -45,7 +52,7 @@ class Database {
                 $this->password
             );
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch(PDOException $exception) {
+        } catch (PDOException $exception) {
             echo "Connection error: " . $exception->getMessage();
         }
 
