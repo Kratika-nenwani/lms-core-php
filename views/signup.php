@@ -82,7 +82,7 @@
 // });
 document.getElementById('signupForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    const form = new FormData(this);
+    const formElement = this; 
 
     fetch('../controller/AuthController.php', {
         method: 'POST',
@@ -94,7 +94,7 @@ document.getElementById('signupForm').addEventListener('submit', function(e) {
         const messageDiv = document.getElementById('responseMessage');
         if (data.status === "success") {
             messageDiv.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
-            this.reset(); // reset the form
+            formElement.reset();
         } else {
             messageDiv.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
         }
@@ -105,6 +105,7 @@ document.getElementById('signupForm').addEventListener('submit', function(e) {
             `<div class="alert alert-danger">Something went wrong. Please try again.</div>`;
     });
 });
+
 
 </script>
 
